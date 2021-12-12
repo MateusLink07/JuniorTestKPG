@@ -17,25 +17,42 @@ class TaskController extends Controller
             'user_id' => Auth::user()->id,
             'title' => $request->title
         ]);
-        return 'Task '.$task->name.' criado';
+        return redirect('tasks');
     }
     // R
     public function listTask(Request $request)
     {
         $tasks = Task::all()->where('user_id', Auth::user()->id);
-        return $tasks;
+        return view('tasks', ['tasks'=>$tasks]);
     }
     // U
+    public function newTaskView(){
+        return view('task');
+    }
+    public function updateTaskView($id)
+    {
+        $task = Task::find($id);
+        // return $task;
+        return view('task', ['task'=>$task]);
+    }
     public function updateTask(Request $request, $id)
     {
-        $task = Task::all()->where('id', $id)[0];
+        $task = Task::find($id);
         $task->title = $request->title;
-        return 'Task '.$task->title.' editado';
+        $task->save();
+        return redirect('tasks');
+    }
+    public function changeTask($id)
+    {
+        $task = Task::all()->where('id', $id)->first();
+        $task->done = $task->done ? 0 : 1;
+        $task->save();
+        return redirect('tasks');
     }
     public function deleteTask($id)
     {
         Task::find($id)->delete();
-        return 'Task Deletada';
+        return redirect('tasks');
     }
     // D
 }

@@ -16,18 +16,15 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
 
 Route::get('/task/new', [TaskController::class, 'newTask'])->middleware(['auth'])->name('new');
-Route::get('/task', [TaskController::class, 'listTask'])->middleware(['auth'])->name('list');
-Route::get('/task/{id}', [TaskController::class, 'updateTask'])->middleware(['auth'])->name('update');
+Route::get('/tasks', [TaskController::class, 'listTask'])->middleware(['auth'])->name('dashboard');
+Route::get('/task', [TaskController::class, 'newTaskView'])->middleware(['auth'])->name('newTask');
+Route::get('/task/{id}', [TaskController::class, 'updateTaskView'])->middleware(['auth'])->name('editTask');
+Route::get('/task/{id}/update', [TaskController::class, 'updateTask'])->middleware(['auth'])->name('update');
+Route::get('/task/{id}/change', [TaskController::class, 'changeTask'])->middleware(['auth'])->name('change');
 Route::get('/task/{id}/delete', [TaskController::class, 'deleteTask'])->middleware(['auth'])->name('delete');
 
-
-
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('login');
 });
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';

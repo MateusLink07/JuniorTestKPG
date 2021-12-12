@@ -13,6 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+use App\Http\Controllers\TaskController;
+
+Route::get('/task/new', [TaskController::class, 'newTask'])->middleware(['auth'])->name('new');
+Route::get('/task', [TaskController::class, 'listTask'])->middleware(['auth'])->name('list');
+Route::get('/task/{id}', [TaskController::class, 'updateTask'])->middleware(['auth'])->name('update');
+Route::get('/task/{id}/delete', [TaskController::class, 'deleteTask'])->middleware(['auth'])->name('delete');
+
+
+
 Route::get('/', function () {
     return view('welcome');
 });

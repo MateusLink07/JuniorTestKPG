@@ -21,8 +21,8 @@ class TaskController extends Controller
 
     public function listTaskView(Request $request)
     {
-        $tasks = Task::all()->where('user_id', Auth::user()->id);
-        return view('tasks', ['tasks'=>$tasks]);
+        $tasks = Task::where('user_id', Auth::user()->id);
+        return view('tasks', ['length'=>ceil(count($tasks->get()) / 20), 'tasks'=>$tasks->paginate(20), "actualPage"=>$request->page ? $request->page : 1]);
     }
 
     public function newTask(Request $request)

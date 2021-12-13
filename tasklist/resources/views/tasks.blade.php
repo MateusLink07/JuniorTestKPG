@@ -48,10 +48,23 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        <div class="flex justify-end">
+                            <div class="btn-group">
+                                @for ($i = 1; $i <= $length; $i++)
+                                    <input type="radio" name="options" id="option2" data-title="{{ $i }}" 
+                                        @if ( $actualPage == $i)
+                                            checked="checked"                                            
+                                        @endif
+                                        class="btn"
+                                        onchange="window.location.assign('{{ route('listTaskView').'?page='.$i }}')"
+                                    >
+                                @endfor
+                            </div>
+                        </div>
                     </div>
-                    </ul>
                 </div>
             </div>
         </div>
     </div>
 </x-app-layout>
+

@@ -15,30 +15,31 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200 text-gray-800">
-                    <div class="overflow-x-auto flex">
+                    <div class="overflow-x-auto">
                         @csrf
                         <form
+                            class="flex"
                         @isset($task)
-                            action="/task/{{ $task->id }}/update"
+                            action="{{ route('update', ['id'=>$task->id]) }}"
                         @else
-                            action="/task/new"
+                            action="{{ route('new') }}"
                         @endisset ()
                         method="get">
-                            <div class="form-control">
-                                <label class="label">
-                                  <span class="label-text">Username</span>
-                                </label>
+                            <div class="form-control flex-grow">
                                 <input 
+                                    {{-- class="w-full" --}}
+                                    id="title"
                                     type="text"
                                     placeholder="Titulo do Objetivo"
                                     @isset($task)
                                         value="{{ $task->title }}"
                                     @endisset
-                                    class="input input-bordered"
+                                    class="input input-bordered m-4"
                                     name="title"
+                                    oninput="checkValid(event)"
                                 >
                             </div>
-                            <button type="submit" class="btn btn-success">
+                            <button id="submit" disabled="true" type="submit" class="btn btn-success m-4 w-48">
                                 @isset($task)
                                     Editar Objetivo
                                 @else
@@ -47,9 +48,18 @@
                             </button>
                         </form>
                     </div>
-                    </ul>
                 </div>
             </div>
         </div>
     </div>
 </x-app-layout>
+
+<script>
+    function checkValid() {
+        if (document.getElementById('title').value) {
+            document.getElementById('submit').disabled = false
+        }else{
+            document.getElementById('submit').disabled = true
+        }
+    }
+</script>

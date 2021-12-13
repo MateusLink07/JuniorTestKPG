@@ -10,49 +10,50 @@ use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
-    // C
+
+    public function taskView($id = NULL)
+    {
+        if ($id) {
+            return view('task', ['task'=>Task::find($id)]);
+        }
+        return view('task');
+    }
+
+    public function listTaskView(Request $request)
+    {
+        $tasks = Task::all()->where('user_id', Auth::user()->id);
+        return view('tasks', ['tasks'=>$tasks]);
+    }
+
     public function newTask(Request $request)
     {
         $task = Task::create([
             'user_id' => Auth::user()->id,
             'title' => $request->title
         ]);
-        return redirect('tasks');
+        return redirect()->route('listTaskView');
     }
-    // R
-    public function listTask(Request $request)
-    {
-        $tasks = Task::all()->where('user_id', Auth::user()->id);
-        return view('tasks', ['tasks'=>$tasks]);
-    }
-    // U
-    public function newTaskView(){
-        return view('task');
-    }
-    public function updateTaskView($id)
-    {
-        $task = Task::find($id);
-        // return $task;
-        return view('task', ['task'=>$task]);
-    }
+
     public function updateTask(Request $request, $id)
     {
         $task = Task::find($id);
         $task->title = $request->title;
         $task->save();
-        return redirect('tasks');
+        return redirect()->route('listTaskView');
     }
+
     public function changeTask($id)
     {
         $task = Task::all()->where('id', $id)->first();
         $task->done = $task->done ? 0 : 1;
         $task->save();
-        return redirect('tasks');
+        return redirect()->route('listTaskView');
     }
+
     public function deleteTask($id)
     {
         Task::find($id)->delete();
-        return redirect('tasks');
+        return redirect()->route('listTaskView');
     }
-    // D
-}
+
+};

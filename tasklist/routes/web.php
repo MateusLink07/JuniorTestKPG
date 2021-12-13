@@ -1,27 +1,19 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\TaskController;
 
-Route::get('/task/new', [TaskController::class, 'newTask'])->middleware(['auth'])->name('new');
-Route::get('/tasks', [TaskController::class, 'listTask'])->middleware(['auth'])->name('dashboard');
-Route::get('/task', [TaskController::class, 'newTaskView'])->middleware(['auth'])->name('newTask');
-Route::get('/task/{id}', [TaskController::class, 'updateTaskView'])->middleware(['auth'])->name('editTask');
-Route::get('/task/{id}/update', [TaskController::class, 'updateTask'])->middleware(['auth'])->name('update');
-Route::get('/task/{id}/change', [TaskController::class, 'changeTask'])->middleware(['auth'])->name('change');
-Route::get('/task/{id}/delete', [TaskController::class, 'deleteTask'])->middleware(['auth'])->name('delete');
+Route::prefix('objetivo')->middleware(['auth'])->group(function () {
+    Route::get('/novo', [TaskController::class, 'taskView'])->name('newTaskView');
+    Route::get('/{id}', [TaskController::class, 'taskView'])->where('id', '[0-9]+')->name('editTaskView');
+    Route::get('/todos', [TaskController::class, 'listTaskView'])->name('listTaskView');
+
+    Route::get('/new', [TaskController::class, 'newTask'])->name('new');
+    Route::get('/{id}/update', [TaskController::class, 'updateTask'])->where('id', '[0-9]+')->name('update');
+    Route::get('/{id}/change', [TaskController::class, 'changeTask'])->where('id', '[0-9]+')->name('change');
+    Route::get('/{id}/delete', [TaskController::class, 'deleteTask'])->where('id', '[0-9]+')->name('delete');
+});
 
 Route::get('/', function () {
     return redirect('login');

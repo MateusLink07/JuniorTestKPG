@@ -16,15 +16,22 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200 text-gray-800">
                     <div class="overflow-x-auto">
-                        @csrf
                         <form
                             class="flex"
+                            method="POST"
                         @isset($task)
                             action="{{ route('update', ['id'=>$task->id]) }}"
                         @else
                             action="{{ route('new') }}"
                         @endisset ()
-                        method="get">
+                        >
+                            @isset($task)
+                                @method('PUT')
+                            @else
+                                @method('POST')
+                            @endisset
+                            @csrf
+
                             <div class="form-control flex-grow">
                                 <input 
                                     {{-- class="w-full" --}}

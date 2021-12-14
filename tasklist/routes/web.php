@@ -9,10 +9,10 @@ Route::prefix('objetivo')->middleware(['auth'])->group(function () {
     Route::get('/{id}', [TaskController::class, 'taskView'])->where('id', '[0-9]+')->name('editTaskView');
     Route::get('/todos', [TaskController::class, 'listTaskView'])->name('listTaskView');
 
-    Route::get('/new', [TaskController::class, 'newTask'])->name('new');
-    Route::get('/{id}/update', [TaskController::class, 'updateTask'])->where('id', '[0-9]+')->name('update');
-    Route::get('/{id}/change', [TaskController::class, 'changeTask'])->where('id', '[0-9]+')->name('change');
-    Route::get('/{id}/delete', [TaskController::class, 'deleteTask'])->where('id', '[0-9]+')->name('delete');
+    Route::post('/new', [TaskController::class, 'newTask'])->name('new');
+    Route::put('/{id}/update', [TaskController::class, 'updateTask'])->where('id', '[0-9]+')->name('update');
+    Route::put('/{id}/change', [TaskController::class, 'changeTask'])->where('id', '[0-9]+')->name('change');
+    Route::delete('/{id}/delete', [TaskController::class, 'deleteTask'])->where('id', '[0-9]+')->name('delete');
 });
 
 Route::get('/', function () {

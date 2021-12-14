@@ -19,6 +19,7 @@
                                     <th>
                                         Objetivo
                                     </th>
+                                    <th></th>
                                     <th>Ações</th>
                                 </tr>
                             </thead>
@@ -35,8 +36,12 @@
                                         >
                                             {{ $task->title }}
                                         </td>
+                                        <td class="text-green-400">
+                                            @if ($task->done == 1)
+                                                Objetivo Completo!
+                                            @endif
+                                        </td>
                                         <td class="p-4 flex justify-center align-middle">
-
                                             <form id="change{{$task->id}}" action="{{ route('change', $task->id) }}" method="post">
                                                 @method('PUT')
                                                 @csrf

@@ -1,5 +1,5 @@
 # SimpleTasklist
-A Simple Tasklist app made in Laravel, Tailwind with daisyUI. With a user system, a simple registration of activities, with the possibility to edit, remove and mark them as done.
+A simple tasklist app made in Laravel, Tailwind with daisyUI. With a user system, a simple registration of activities, with the possibility to edit, remove and mark them as done.
 
 Originally created as an application test at a local company. 
 
